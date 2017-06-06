@@ -1,0 +1,168 @@
+call plug#begin('~/.vim/plugged')
+function! DoRemote(arg)
+  UpdateRemotePlugins
+endfunction
+"" Javascript
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'tikhomirov/vim-glsl', { 'for': 'glsl' }
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'kien/ctrlp.vim'
+Plug 'mattn/emmet-vim', { 'for': 'html' }
+Plug 'gregsexton/MatchTag', { 'for': 'html' }
+Plug 'scrooloose/nerdcommenter'
+"Plug 'Valloric/YouCompleteMe'
+Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+Plug 'carlitux/deoplete-ternjs'
+"Plug 'ervandew/supertab'
+Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+Plug 'junegunn/goyo.vim'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'vim-scripts/vylight'
+Plug 'vim-scripts/vydark'
+Plug 'vim-scripts/oceanlight'
+Plug 'KabbAmine/vCoolor.vim'
+Plug 'majutsushi/tagbar'
+Plug 'moll/vim-node'
+Plug 'scrooloose/syntastic'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'plasticboy/vim-markdown'
+call plug#end()
+
+""clipboard
+set clipboard=unnamed
+
+syntax enable
+colorscheme monokai
+""colorscheme vylight
+""colorscheme tomorrow
+""colorscheme oceanlight
+let g:python_host_prog='/usr/local/bin/python'
+set shell=/bin/bash\ --rcfile\ ~/.bash_profile
+let $BASH_ENV = "~/.bash_aliases"
+nnoremap <c-t> :NERDTreeToggle<cr>
+"nnoremap <F5> :tabnew %:p<cr>:terminal /Users/vorg/Dev/plask/DerivedData/plask/Build/Products/Debug/Plask.app/Contents/MacOS/Plask --harmony_destructuring %:p<cr>
+"nnoremap <F5> :tabnew %:p<cr>:terminal /Applications/Plask.v4.app/Contents/MacOS/Plask --harmony_destructuring --use_strict %:p<cr>
+"nnoremap <F5> :tabnew %:p<cr>:terminal /Applications/Plask.v4.app/Contents/MacOS/Plask --harmony_destructuring %:p<cr>
+"nnoremap <F5> :tabnew %:p<cr>:terminal /Applications/Plask.v5.app/Contents/MacOS/Plask --stack-size=10000 --inspect %:p<cr>
+nnoremap <F5> :!/Applications/Plask.v5.app/Contents/MacOS/Plask %:p<cr>
+""nnoremap <c-m> :!open -a "Marked 2" "%:p"<cr>
+
+filetype plugin on
+
+"" enable airline
+set laststatus=2
+let g:airline#extensions#tabline#enabled = 1
+
+""cursor types in iTerm
+""let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+""let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+""let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+"":set mouse=nicr ""mouse scrolling in iTerm
+
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
+"" Autocomplete
+"let g:SuperTabDefaultCompletionType = 'context'
+"let g:SuperTabContextDefaultCompletionType = 'context'
+"let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" Remove trailing whitespaces
+nnoremap <silent> <Leader><BS> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let@/=_s<Bar>:nohl<CR>:w<CR>
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+
+"" Split windows
+
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+"unmap <C-]>
+nnoremap L :tabn<CR>
+nnoremap H :tabp<CR>
+nnoremap T :tabnew<CR>
+"nnoremap J 5j
+"nnoremap K 5k
+
+" Deoplete
+"let g:deoplete#enable_refresh_always = 1
+let g:deoplete#enable_at_startup = 1
+"let g:tern#command = ["tern"]
+"let g:tern#arguments = ["--persistent"]
+"let g:tern_show_signature_in_pum = 0
+
+"Plugin shortcuts
+"ć = Alt-C
+nnoremap ć :VCoolor<CR>
+
+"ctags
+nmap <F8> :TagbarToggle<CR>
+"let g:tagbar_ctags_bin = 'jsctags'
+
+"" Html
+
+" disable the current htmlLink syntax
+" let html_no_rendering=1
+highlight link htmlLink text
+
+"" comments
+let g:NERDCustomDelimiters = { 'javascript': { 'left': '// ', 'leftAlt': '/*', 'rightAlt': '*/' }, 'vert': { 'left': '// ', 'leftAlt': '/*', 'rightAlt': '*/' }, 'frag': { 'left': '// ', 'leftAlt': '/*', 'rightAlt': '*/' }, 'glsl': { 'left': '// ', 'leftAlt': '/*', 'rightAlt': '*/' } }
+
+"" syntax checker
+
+let g:syntastic_javascript_checkers = ['standard']
+let g:syntastic_javascript_standard_exec = 'standard'
+let g:syntastic_javascript_standard_generic = 1
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+"" General
+
+set tabstop=2
+set expandtab
+set shiftwidth=2
+set completeopt-=preview
+"set relativenumber
+set number
+set nowrap
+
+"" ctrlp custom ignore
+let g:ctrlp_custom_ignore = { 'dir':  '\v[\/]\.(git|hg|svn)$', 'file': '\v\.(exe|so|dll)$' }
+"let g:ctrlp_path_nolim = 1
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -U -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR><CR>
+
+" bind F to fzf file search
+nnoremap F :Files<CR>
+
+
+let g:vim_markdown_folding_disabled = 1
+"let g:vim_markdown_fenced_languages = ['javascript=js', 'bash=sh']
+
+set title
