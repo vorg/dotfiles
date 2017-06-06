@@ -1,0 +1,68 @@
+# enable colors
+set -g default-terminal "screen-256color"
+
+# clipboard
+# Copy-paste integration
+set-option -g default-command "reattach-to-user-namespace -l bash"
+
+# Use vim keybindings in copy mode
+setw -g mode-keys vi
+
+# Setup 'v' to begin selection as in Vim
+bind-key -t vi-copy v begin-selection
+bind-key -t vi-copy y copy-pipe "reattach-to-user-namespace pbcopy"
+
+# Update default binding of `Enter` to also use copy-pipe
+unbind -t vi-copy Enter
+bind-key -t vi-copy Enter copy-pipe "reattach-to-user-namespace pbcopy"
+
+# Bind ']' to use pbpaste
+bind ] run "reattach-to-user-namespace pbpaste | tmux load-buffer - && tmux paste-buffer"
+
+
+# remap prefix to Control + a
+set -g prefix C-a
+# bind 'C-a C-a' to type 'C-a'
+bind C-a send-prefix
+unbind C-b
+
+# Automatically set window title
+# set-window-option -g automatic-rename on
+# set-option -g set-titles on
+
+bind -n S-Left  previous-window
+bind -n S-Right next-window
+
+# Theme
+set -g status-bg black
+set -g status-fg white
+set -g window-status-current-bg white
+set -g window-status-current-fg black
+set -g window-status-current-attr bold
+
+# split panes using | and -
+bind | split-window -h
+bind - split-window -v
+unbind '"'
+unbind %
+
+# reload config file (change file location to your the tmux.conf you want to use)
+bind r source-file ~/.tmux.conf
+
+# remove esc lag
+set -sg escape-time 0
+
+# enable mouse
+set -g mouse on
+
+
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @resurrect-strategy-nvim 'session'
+
+set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @continuum-restore 'on'
+
+run '~/.tmux/plugins/tpm/tpm'
