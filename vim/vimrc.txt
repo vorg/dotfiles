@@ -30,7 +30,11 @@ Plug 'moll/vim-node'
 Plug 'scrooloose/syntastic'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'plasticboy/vim-markdown'
 call plug#end()
+
+""clipboard
+set clipboard=unnamed
 
 syntax enable
 colorscheme monokai
@@ -42,7 +46,10 @@ set shell=/bin/bash\ --rcfile\ ~/.bash_profile
 let $BASH_ENV = "~/.bash_aliases"
 nnoremap <c-t> :NERDTreeToggle<cr>
 "nnoremap <F5> :tabnew %:p<cr>:terminal /Users/vorg/Dev/plask/DerivedData/plask/Build/Products/Debug/Plask.app/Contents/MacOS/Plask --harmony_destructuring %:p<cr>
-nnoremap <F5> :tabnew %:p<cr>:terminal /Applications/Plask.v4.app/Contents/MacOS/Plask --harmony_destructuring %:p<cr>
+"nnoremap <F5> :tabnew %:p<cr>:terminal /Applications/Plask.v4.app/Contents/MacOS/Plask --harmony_destructuring --use_strict %:p<cr>
+"nnoremap <F5> :tabnew %:p<cr>:terminal /Applications/Plask.v4.app/Contents/MacOS/Plask --harmony_destructuring %:p<cr>
+"nnoremap <F5> :tabnew %:p<cr>:terminal /Applications/Plask.v5.app/Contents/MacOS/Plask --stack-size=10000 --inspect %:p<cr>
+nnoremap <F5> :!/Applications/Plask.v5.app/Contents/MacOS/Plask %:p<cr>
 ""nnoremap <c-m> :!open -a "Marked 2" "%:p"<cr>
 
 filetype plugin on
@@ -153,5 +160,9 @@ nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR><CR>
 
 " bind F to fzf file search
 nnoremap F :Files<CR>
+
+
+let g:vim_markdown_folding_disabled = 1
+"let g:vim_markdown_fenced_languages = ['javascript=js', 'bash=sh']
 
 set title
