@@ -36,9 +36,6 @@ PATH="/Library/Frameworks/Python.framework/Versions/3.4/bin:${PATH}"
 export PATH
 
 
-export TRELLO_KEY="013c0e7f8559ab22fc2968f0e92b8afa"
-export TRELLO_TOKEN="de442179997347e88e3288d9b507eff49fc12db2b53cfed8125235f5848cf04e"
-
 # Virtualenv/VirtualenvWrapper
 source /Library/Frameworks/Python.framework/Versions/2.7/bin/virtualenvwrapper.sh
 
