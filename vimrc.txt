@@ -3,7 +3,14 @@ function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
 "" Javascript
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+"Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+"Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
+Plug 'othree/yajs.vim', { 'for': 'javascript' }
+
+"NodeJS based syntax highlighting
+"Plug 'neovim/node-host', { 'do': 'npm install' }
+"Plug 'billyvg/tigris.nvim', { 'do': './install.sh' }
+
 Plug 'tikhomirov/vim-glsl', { 'for': 'glsl' }
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -36,8 +43,11 @@ call plug#end()
 ""clipboard
 set clipboard=unnamed
 
+set background=dark
 syntax enable
 colorscheme monokai
+"colorscheme Base2Tone_SeaDark
+set t_Co=25
 ""colorscheme vylight
 ""colorscheme tomorrow
 ""colorscheme oceanlight
@@ -49,7 +59,8 @@ nnoremap <c-t> :NERDTreeToggle<cr>
 "nnoremap <F5> :tabnew %:p<cr>:terminal /Applications/Plask.v4.app/Contents/MacOS/Plask --harmony_destructuring --use_strict %:p<cr>
 "nnoremap <F5> :tabnew %:p<cr>:terminal /Applications/Plask.v4.app/Contents/MacOS/Plask --harmony_destructuring %:p<cr>
 "nnoremap <F5> :tabnew %:p<cr>:terminal /Applications/Plask.v5.app/Contents/MacOS/Plask --stack-size=10000 --inspect %:p<cr>
-nnoremap <F5> :!/Applications/Plask.v5.app/Contents/MacOS/Plask %:p<cr>
+nnoremap <F5> :!/Applications/Plask.v5.app/Contents/MacOS/Plask "%:p"<cr>
+nnoremap <F3> :!node "%:p"<cr>
 ""nnoremap <c-m> :!open -a "Marked 2" "%:p"<cr>
 
 filetype plugin on
@@ -62,7 +73,7 @@ let g:airline#extensions#tabline#enabled = 1
 ""let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 ""let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 ""let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-"":set mouse=nicr ""mouse scrolling in iTerm
+:set mouse=nicr ""mouse scrolling in iTerm
 
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
@@ -92,10 +103,19 @@ nnoremap T :tabnew<CR>
 
 " Deoplete
 "let g:deoplete#enable_refresh_always = 1
+let g:deoplete#disable_auto_complete = 1
 let g:deoplete#enable_at_startup = 1
 "let g:tern#command = ["tern"]
 "let g:tern#arguments = ["--persistent"]
 "let g:tern_show_signature_in_pum = 0
+inoremap <silent><expr> <TAB>
+		\ pumvisible() ? "\<C-n>" :
+		\ <SID>check_back_space() ? "\<TAB>" :
+		\ deoplete#mappings#manual_complete()
+		function! s:check_back_space() abort "{{{
+		let col = col('.') - 1
+		return !col || getline('.')[col - 1]  =~ '\s'
+		endfunction"}}}
 
 "Plugin shortcuts
 "ć = Alt-C
@@ -166,3 +186,12 @@ let g:vim_markdown_folding_disabled = 1
 "let g:vim_markdown_fenced_languages = ['javascript=js', 'bash=sh']
 
 set title
+
+let g:tigris#enabled = 1
+let g:tigris#debug = 1
+
+"disable swap files
+"they are created in case your editor or computer crashes and to prevent
+"editing the same file twice
+set noswapfile
+
